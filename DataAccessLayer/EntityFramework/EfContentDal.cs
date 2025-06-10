@@ -4,7 +4,7 @@ using EntityLayer.Concrete;
 
 namespace DataAccessLayer.EntityFramework
 {
-    public class EFContentDal : GenericRepository<Content>, IContentDal
+    public class EfContentDal : GenericRepository<Content>, IContentDal
     {
     }
 }

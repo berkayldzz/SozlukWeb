@@ -9,7 +9,7 @@ namespace SozlukWeb.Controllers
     {
         // GET: Content
 
-        ContentManager cm = new ContentManager(new EFContentDal());
+        ContentManager cm = new ContentManager(new EfContentDal());
         public ActionResult Index()
         {
             return View();

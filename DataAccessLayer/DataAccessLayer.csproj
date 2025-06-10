@@ -59,7 +59,6 @@
     <Compile Include="Abstract\IContentDal.cs" />
     <Compile Include="Abstract\IHeadingDal.cs" />
     <Compile Include="Abstract\IImageFileDal.cs" />
-    <Compile Include="Abstract\IImageFileService.cs" />
     <Compile Include="Abstract\IMessageDal.cs" />
     <Compile Include="Abstract\IMessageService.cs" />
     <Compile Include="Abstract\IRepository.cs" />

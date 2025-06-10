@@ -40,6 +40,11 @@ namespace BusinessLayer.Concrete
             return _contentDal.List(x => x.ContentValue.Contains(p));
         }
 
+        public List<Content> GetAll()
+        {
+            return _contentDal.List(); 
+        }
+
         public List<Content> GetListByHeadingID(int id)
         {
             return _contentDal.List(x => x.HeadingID == id); // Dışarıdan girdiğim id ile yani yazılar butonuna tıkladığımda ilgili başlığa ait içeriği getiricek.
