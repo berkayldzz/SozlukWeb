@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using FluentValidation.Results;
+
 
 namespace SozlukWeb.Controllers
 {
@@ -19,6 +22,10 @@ namespace SozlukWeb.Controllers
         // Admin Login İşlemleri
 
         WriterLoginManager wm = new WriterLoginManager(new EfWriterDal());
+       
+        WriterManager wm2 = new WriterManager(new EfWriterDal());
+
+        WriterValidator writervalidator = new WriterValidator();
 
         [HttpGet]
         public ActionResult Index()
@@ -74,6 +81,33 @@ namespace SozlukWeb.Controllers
 
 
         }
+
+        [HttpGet]
+        public ActionResult AddWriter()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddWriter(Writer p)
+        {
+
+            ValidationResult result = writervalidator.Validate(p);
+            if (result.IsValid)
+            {
+                wm2.WriterAdd(p);
+                return RedirectToAction("WriterLogin");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+
+            return View();
+        }
+
 
         public ActionResult LogOut()
         {

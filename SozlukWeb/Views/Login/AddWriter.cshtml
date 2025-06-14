@@ -1,0 +1,166 @@
+﻿@model EntityLayer.Concrete.Writer
+@{
+    ViewBag.Title = "Yeni Yazar Kaydı";
+    Layout = null; // Layout kullanmadığımızı belirtiyoruz
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+
+    <style>
+        /* Genel Stil Ayarları */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5; /* Hafif gri arka plan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Sayfanın tamamını kaplamasını sağlar */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
+        }
+
+        /* Form Kapsayıcı Stili */
+        .register-container {
+            background-color: #ffffff;
+            padding: 35px 45px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+            width: 100%;
+            max-width: 550px; /* Maksimum genişlik */
+            box-sizing: border-box;
+        }
+
+            /* Başlık Stili */
+            .register-container h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+                font-size: 1.8em;
+                font-weight: 600;
+            }
+
+        /* Form Grubu Stili */
+        .form-group {
+            margin-bottom: 20px; /* Her bir alanın altına boşluk */
+        }
+
+            /* Etiket (Label) Stili */
+            .form-group label {
+                display: block; /* Etiketi bloğa çevirip ayrı satıra alır */
+                margin-bottom: 8px;
+                color: #555;
+                font-weight: 500;
+                font-size: 0.95em;
+            }
+
+        /* Giriş Kutusu (TextBox) ve Metin Alanı (TextArea) Stili */
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* Köşeleri yuvarlat */
+            font-size: 1em;
+            color: #333;
+            box-sizing: border-box; /* Padding ve border genişliğe dahil */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Geçiş efekti */
+        }
+
+            .form-control:focus {
+                border-color: #007bff; /* Odaklandığında mavi kenarlık */
+                box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Hafif mavi gölge */
+                outline: none; /* Varsayılan odak çerçevesini kaldır */
+            }
+
+        /* Metin Alanı İçin Ek Stil */
+        textarea.form-control {
+            resize: vertical; /* Sadece dikeyde yeniden boyutlandırmaya izin ver */
+            min-height: 90px;
+        }
+
+        /* Hata Mesajı Stili */
+        .validation-message {
+            color: #e74c3c; /* Kırmızı renk */
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: block; /* Hata mesajını ayrı bir satıra alır */
+        }
+
+        /* Buton Stili */
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745; /* Yeşil ton */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Geçiş efekti */
+        }
+
+            .btn-submit:hover {
+                background-color: #218838; /* Hover'da daha koyu yeşil */
+                transform: translateY(-2px); /* Hafif yukarı kalkma efekti */
+            }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Yeni Yazar Kayıt Formu</h2>
+
+        @using (Html.BeginForm("AddWriter", "Login", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.Label("Yazar Adı")
+                @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control", placeholder = "Adınızı giriniz" })
+                @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Yazar Soyadı")
+                @Html.TextBoxFor(x => x.WriterSurName, new { @class = "form-control", placeholder = "Soyadınızı giriniz" })
+                @Html.ValidationMessageFor(x => x.WriterSurName, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("E-posta Adresi")
+                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", type = "email", placeholder = "e.g., ornek@mail.com" })
+                @Html.ValidationMessageFor(x => x.WriterMail, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Şifre")
+                @Html.TextBoxFor(x => x.WriterPassword, new { @class = "form-control", type = "password", placeholder = "Şifrenizi giriniz" })
+                @Html.ValidationMessageFor(x => x.WriterPassword, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Profil Fotoğrafı Linki")
+                @Html.TextBoxFor(x => x.WriterImage, new { @class = "form-control", placeholder = "Örn: https://example.com/profile.jpg" })
+                @Html.ValidationMessageFor(x => x.WriterImage, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ünvan")
+                @Html.TextBoxFor(x => x.WriterTitle, new { @class = "form-control", placeholder = "Örn: Yazar, Editör, Blogger" })
+                @Html.ValidationMessageFor(x => x.WriterTitle, "", new { @class = "validation-message" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Hakkınızda")
+                @Html.TextAreaFor(x => x.WriterAbout, new { @class = "form-control", rows = "3", placeholder = "Kendiniz hakkında kısa bir açıklama..." })
+                @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "validation-message" })
+            </div>
+
+            <button type="submit" class="btn-submit">Yazarı Kaydet</button>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿@model EntityLayer.Concrete.Content
+
+@{
+    ViewBag.Title = "İçerik Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">İçerik Düzenle</h2>
+
+    @using (Html.BeginForm("EditContent", "Content", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken() @* Important for security to prevent CSRF attacks *@
+
+        @* Hidden field for ContentID to ensure it's passed back on POST *@
+        @Html.HiddenFor(m => m.ContentID)
+
+        @* You might also need to pass the HeadingID if it's crucial for content *@
+        @* @Html.HiddenFor(m => m.HeadingID) *@
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.ContentValue, "İçerik Değeri")
+            @Html.TextAreaFor(m => m.ContentValue, new { @class = "form-control", rows = 5, placeholder = "İçeriği buraya girin...", required = "required" })
+            @Html.ValidationMessageFor(m => m.ContentValue, "", new { @class = "text-danger" })
+        </div>
+
+
+        @* Eğer içerikle ilişkili başka alanlar varsa (örneğin yazar, tarih vb.), bunları da buraya ekleyebilirsiniz *@
+        @*
+            <div class="form-group mb-3">
+                @Html.LabelFor(m => m.ContentDate, "Tarih")
+                @Html.TextBoxFor(m => m.ContentDate, new { @class = "form-control", type = "date" })
+            </div>
+        *@
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a href="/Content/GetAllContent" class="btn btn-secondary ml-2">İptal</a>
+    }
+</div>

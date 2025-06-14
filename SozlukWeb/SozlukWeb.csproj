@@ -150,6 +150,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\WriterCategoryController.cs" />
     <Compile Include="Controllers\WriterController.cs" />
     <Compile Include="Controllers\WriterPanelContentController.cs" />
     <Compile Include="Controllers\WriterPanelController.cs" />
@@ -2583,6 +2584,12 @@
     <Content Include="Views\Authorization\Index.cshtml" />
     <Content Include="Views\Authorization\AddAdmin.cshtml" />
     <Content Include="Views\Authorization\EditAdmin.cshtml" />
+    <Content Include="Views\Login\AddWriter.cshtml" />
+    <Content Include="Views\WriterCategory\Index.cshtml" />
+    <Content Include="Views\WriterCategory\AddCategory.cshtml" />
+    <Content Include="Views\Content\EditContent.cshtml" />
+    <Content Include="Views\WriterPanel\AddContent.cshtml" />
+    <Content Include="Views\WriterPanel\MyContent.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

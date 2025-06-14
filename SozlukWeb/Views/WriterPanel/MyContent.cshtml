@@ -1,0 +1,88 @@
+﻿@using EntityLayer.Concrete
+@model List<Content>
+
+@{
+    ViewBag.Title = "Yazılarım";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+
+    string currentFilter = ViewBag.CurrentFilter as string;
+
+    // Koyu tema için özel renkler
+    string darkTextColor = "#343a40";          // Koyu gri metin
+    string darkerBgColor = "#f8f9fa";          // Açık gri arka plan
+    string primaryDarkColor = "#212529";       // Koyu siyahımsı (ana öğeler için)
+    string cardBorderColor = "#adb5bd";        // Orta gri kenarlık
+
+    // Yeni vurgu rengi - Yazılarım başlığı ve arama kısmı için kullanılacak
+    string accentColor = "#6f42c1";            // Örneğin mor tonu, Boostrap'in "purple" rengine yakın
+    string accentColorDark = "#5a36a5";        // Vurgu renginin daha koyu bir tonu (hover vb. için düşünebilirsiniz)
+}
+
+<div class="container mt-4">
+    @* Yazılarım Başlığı - Yeni Vurgu Rengiyle *@
+    <h2 class="mb-4 font-weight-bold" style="color: @accentColor;">
+        <i class="fa fa-file-text-o mr-2"></i> Yazılarım
+    </h2>
+
+    @* Arama Formu - Yeni Vurgu Rengiyle *@
+    @using (Html.BeginForm("MyContent", "WriterPanel", FormMethod.Get, new { @class = "form-inline mb-4 p-3 border rounded shadow-sm", style = $"background-color: {darkerBgColor}; border-color: {cardBorderColor} !important;" }))
+    {
+        <div class="form-group flex-grow-1 mr-3">
+            <div class="input-group w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text text-white border" style="background-color: @accentColor; border-color: @accentColor !important;">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                @Html.TextBox("p", currentFilter, new { @class = "form-control form-control-lg border", placeholder = "İçerik ara...", autofocus = "autofocus", style = $"border-color: @accentColor !important;" })
+            </div>
+        </div>
+        <button type="submit" class="btn btn-lg shadow-sm" style="background-color: @accentColor; border-color: @accentColor !important; color: white;">Ara</button>
+    }
+
+    @* İçerik Listesi - Mevcut Koyu Tema Stiliyle Kalıyor *@
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm rounded" style="border-left: 5px solid @primaryDarkColor;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center py-3" style="background-color: @primaryDarkColor;">
+                            <h5 class="mb-0 text-white font-weight-bold">
+                                <i class="fa fa-pencil-square-o mr-2"></i> @item.Heading.HeadingName
+                            </h5>
+                            <span class="badge badge-pill badge-light px-3 py-2">
+                                <i class="fa fa-calendar-o mr-1"></i> @(((DateTime)item.ContentDate).ToString("dd.MM.yyyy"))
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text text-justify" style="color: @darkTextColor;">
+                                @(item.ContentValue.Length > 250 ? item.ContentValue.Substring(0, 250) + "..." : item.ContentValue)
+                            </p>
+                        </div>
+                        <div class="card-footer bg-light border-top-0 d-flex justify-content-end align-items-center py-2" style="background-color: @darkerBgColor; border-color: @cardBorderColor !important;">
+                            @* Düzenle/Sil butonları burada yer alabilir *@
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert text-center py-4 rounded shadow-sm" role="alert" style="background-color: @darkerBgColor; border-color: @cardBorderColor; color: @darkTextColor;">
+            <h4 class="alert-heading" style="color: @primaryDarkColor;">
+                <i class="fa fa-info-circle mr-2"></i> İçerik Bulunamadı!
+            </h4>
+            <p class="lead">Henüz hiç içerik eklemediniz veya arama kriterinize uygun içerik bulunamadı.</p>
+            <hr class="my-4" style="border-top: 1px solid @cardBorderColor;">
+            <p class="mb-0">
+                Şimdi yeni bir içerik mi eklemek istersiniz?
+                <a href="/WriterPanel/NewHeading" class="btn btn-lg ml-3 shadow-sm" style="background-color: @primaryDarkColor; border-color: @primaryDarkColor !important; color: white;">
+                    <i class="fa fa-plus-circle mr-2"></i> Yeni Başlık Ekle
+                </a>
+            </p>
+        </div>
+    }
+</div>

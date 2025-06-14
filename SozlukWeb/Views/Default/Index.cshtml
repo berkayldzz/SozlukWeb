@@ -1,50 +1,40 @@
-﻿﻿@using EntityLayer.Concrete
+﻿@using EntityLayer.Concrete
 @model List<Content>
 <br />
 
-<!DOCTYPE html>
-<html>
-<body class="hold-transition sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <section class="content">
-            <div class="container-fluid">
+<div class="wrapper">
+    <section class="content">
+        <div class="container-fluid">
 
-                <!-- Timelime example  -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- The time line -->
-                        <div class="timeline">
-                            <!-- timeline time label -->
-                            @foreach (var item in Model)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="timeline">
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
                             {
-
-
                                 <div class="time-label">
-                                    <span class="bg-success">@(((DateTime)item.ContentDate).ToString("dd-MMM-yyyy")) - @item.Writer.WriterName - @item.Writer.WriterSurName </span>
+                                    <span class="bg-success">@(((DateTime)item.ContentDate).ToString("dd/MMM/yyyy")) - @item.Writer.WriterName  @item.Writer.WriterSurName </span>
                                 </div>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
                                 <div>
                                     <i class="fas fa-comment bg-yellow"></i>
                                     <div class="timeline-item">
+                                        @* The HeadingName here refers to the heading of the specific content entry *@
                                         <h3 class="timeline-header"><a href="#">@item.Heading.HeadingName </a> </h3>
                                         <div class="timeline-body">
                                             @item.ContentValue
                                         </div>
                                     </div>
                                 </div>
-                                <!-- END timeline item -->
                             }
-                        </div>
+                        }
+                        else
+                        {
+                            <p class="text-center text-muted">Bu başlık altında henüz içerik bulunmamaktadır.</p>
+                        }
                     </div>
-                    <!-- /.col -->
                 </div>
             </div>
-            <!-- /.timeline -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- ./wrapper -->
-</body>
-</html>
+        </div>
+    </section>
+</div>
